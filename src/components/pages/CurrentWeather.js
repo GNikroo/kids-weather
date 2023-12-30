@@ -40,13 +40,13 @@ const CurrentWeather = () => {
                 getOutfit(weatherData.temperature, weatherData.weather_code)
                   .image
               }
-              style={{ height: isSmallScreen ? 300 : 500 }}
+              style={{ height: isSmallScreen ? 260 : 500 }}
               alt="Outfit"
             />
           ) : (
             <Image
               src={image}
-              style={{ height: isSmallScreen ? 300 : 500 }}
+              style={{ height: isSmallScreen ? 260 : 500 }}
               alt="Outfit"
             />
           )}

@@ -1,17 +1,9 @@
 import React, { useCallback, useState } from "react";
 import { GoogleMap, useLoadScript, Marker } from "@react-google-maps/api";
 import useWeatherStore from "./hooks/useWeatherStore";
-import styles from "../styles/Map.module.css";
+import ScreenSizeChecker from "../components/hooks/ScreenSizeChecker";
 
 const libraries = ["places"];
-const mapContainerStyle = {
-  width: "25rem",
-  height: "10rem",
-};
-const center = {
-  lat: 0,
-  lng: 0,
-};
 
 const Map = () => {
   const { handleMapClick } = useWeatherStore();
@@ -19,8 +11,18 @@ const Map = () => {
     googleMapsApiKey: process.env.REACT_APP_MAP_API_KEY,
     libraries,
   });
+  const { isSmallScreen } = ScreenSizeChecker();
   const [map, setMap] = useState(null);
   const [marker, setMarker] = useState(null);
+
+  const mapContainerStyle = isSmallScreen
+    ? { height: "10rem", width: "20rem" }
+    : { height: "20rem", width: "25rem" };
+
+  const center = {
+    lat: 0,
+    lng: 0,
+  };
 
   const handleMapClickEvent = (e) => {
     const lat = e.latLng.lat();
@@ -59,9 +61,7 @@ const Map = () => {
   }
 
   return (
-    <div
-      className={`${styles.MapContainer} d-flex align-items-center justify-content-center`}
-    >
+    <div className="d-flex align-items-center justify-content-center">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
         zoom={1}
